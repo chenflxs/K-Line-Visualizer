@@ -22,7 +22,7 @@
 
 ## 部署到云端（推荐）
 
-这是静态网页，推荐使用 GitHub Pages 或 Cloudflare Workers，不用自己准备服务器。
+这是静态网页，不用自己准备服务器。新手可以直接通过 Cloudflare 网页上传；已有 GitHub 仓库也可以使用 GitHub Pages。
 
 部署只需要这四个文件，放在同一个目录：
 
@@ -32,6 +32,19 @@ styles.css
 app.js
 signal.js
 ```
+
+### Cloudflare（网页上传，适合新手）
+
+不用安装 Node.js，也不用输入命令。
+
+1. 把上面的四个文件放进同一个文件夹，确保 `index.html` 就在文件夹根目录。
+2. 打开 [Cloudflare Drop](https://www.cloudflare.com/drop/)，把整个文件夹或它的 ZIP 压缩包拖进去。
+3. 等待上传完成，打开页面给出的 `workers.dev` 网址。
+4. 点击 **Claim（认领）**，登录或注册 Cloudflare 账号，把网站保留到自己的账号下。
+
+未认领的网址只保留 **1 小时**，长期使用需要完成第 4 步。认领后可以在 Cloudflare 控制台的 **Workers & Pages** 中管理网站。
+
+[Cloudflare 官方上传说明](https://developers.cloudflare.com/changelog/post/2026-07-08-cloudflare-drag-and-drop/)
 
 ### GitHub Pages
 
@@ -45,23 +58,6 @@ signal.js
 之后把修改推送到同一分支，网页就会自动更新。
 
 [GitHub Pages 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
-
-### Cloudflare Workers
-
-使用 Workers 的静态资源功能发布，不需要编写 Worker 后端。
-
-1. 注册 Cloudflare 账号并安装 [Node.js](https://nodejs.org/)。
-2. 在项目目录中新建 `public` 文件夹，把上面的四个文件复制进去。
-3. 在项目目录打开终端，执行：
-
-```sh
-npx wrangler login
-npx wrangler deploy --assets ./public --name k-line-visualizer
-```
-
-按照提示完成登录和部署，然后打开输出的 `workers.dev` 网址。更新时把修改后的文件复制到 `public`，再次执行部署命令。
-
-[Cloudflare 静态资源说明](https://developers.cloudflare.com/workers/static-assets/) · [部署命令说明](https://developers.cloudflare.com/workers/wrangler/commands/workers/#deploy)
 
 ## 本地运行
 
