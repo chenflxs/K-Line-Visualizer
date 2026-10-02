@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d1117">
+  <title>K-LINE · 音频可视化</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="symbols" aria-hidden="true"><defs>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 3v18m7-15v15m7-18v15M3 7h4v8H3zm7 3h4v6h-4zm7-5h4v7h-4z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3M7 8l5-5 5 5M4 15v5h16v-5"/></symbol>
+  </defs></svg>
+  <main id="studio">
+    <header class="header">
+      <a class="brand" href="./index.html"><svg><use href="#i-chart"/></svg>K-LINE<span>AUDIO</span></a>
+      <div class="view-switch" role="group" aria-label="可视化版本">
+        <button id="trendView" data-view="trend" class="selected" aria-pressed="true">走势 K 线</button>
+        <button id="frequencyView" data-view="frequency" aria-pressed="false">频响 K 线</button>
+      </div>
+      <button class="icon-button" id="fullscreenButton" aria-label="全屏" title="全屏"><svg><use href="#i-expand"/></svg></button>
+    </header>
+    <section class="source-toolbar" aria-label="音频来源">
+      <label class="source-select">音源<select id="sourceSelect" aria-label="音频来源"><option value="speakers">扬声器 / 系统音频</option><option value="demo">内置试听</option><option value="file">本地音频</option></select></label>
+      <button class="connect-button" id="playButton" aria-label="连接扬声器"><svg><use href="#i-play"/></svg><span id="playLabel">连接扬声器</span></button>
+      <button class="file-button" id="chooseFile" hidden><svg><use href="#i-upload"/></svg>选择文件</button>
+      <input id="fileInput" type="file" accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a,.aac" hidden>
+      <span class="track-name" id="trackName">等待共享音频</span>
+      <span class="status"><i id="statusDot"></i><span id="chartStatus">待连接</span></span>
+    </section>
+    <section class="chart" id="chartPanel" aria-label="音频 K 线画布">
+      <div class="chart-heading"><div><h1 id="chartTitle">声音走势</h1><span id="axisDescription">时间 / 声音指数</span></div><div class="chart-readout"><span id="levelValue">— dBFS</span></div></div>
+      <div class="canvas-wrap" id="canvasWrap"><canvas id="chartCanvas" role="img" aria-label="音频 K 线可视化"></canvas><div class="chart-tooltip" id="chartTooltip" hidden></div></div>
+      <p class="source-message" id="sourceNote" role="status" hidden></p>
+    </section>
+    <section class="controls" aria-label="画面调节">
+      <label id="gainControl" for="gain">低响度增强<output id="gainOutput">4.0×</output><input id="gain" aria-label="低响度增强" type="range" min="1" max="8" step="0.1" value="4"></label>
+      <label id="randomControl" for="randomness">随机波动<output id="randomOutput">80%</output><input id="randomness" aria-label="随机波动" type="range" min="0" max="100" value="80"></label>
+      <label for="smoothing">平滑度<output id="smoothingOutput">35%</output><input id="smoothing" aria-label="平滑度" type="range" min="0" max="90" value="35"></label>
+      <label class="interval-control"><span id="intervalLabel">采样周期</span><select id="interval" aria-label="采样周期"><option value="100">100 ms</option><option value="250" selected>250 ms</option><option value="500">500 ms</option></select></label>
+    </section>
+    <section class="media-controls" id="mediaControls" aria-label="播放控制" hidden><span id="currentTime">0:00</span><input id="seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="播放进度"><span id="duration">1:04</span><label>音量<input id="volume" type="range" min="0" max="100" value="65" aria-label="播放音量"></label></section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="signal.js?v=20261002.2"></script>
+  <script src="app.js?v=20261002.2"></script>
+</body>
+</html>
